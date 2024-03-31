@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POSTKU</title>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="reset.css">
+</head>
+
+<style>
+    :root {
+        --primary: #f99722;
+        --secondary: #FFBE65;
+        --grey: #C5C5C5;
+        --black50: rgba(0, 0, 0, 0.5);
+        --black30: rgba(0, 0, 0, 0.3);
+        --red: #FF0051;
+    }
+
+    #mainContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+        background-color: white;
+        padding: 16px;
+    }
+
+    #iconChooseImg {
+        width: 250px;
+        height: 250px;
+        align-self: center;
+    }
+
+    .radioButtonItem {
+        border: solid 1px var(--grey);
+        margin-bottom: 10px;
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    .radioButtonText {
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+        font-size: 16px;
+        color: var(--grey);
+        margin-left: 15px;
+    }
+
+    #thirdSectionBtn1 {
+        margin-top: 10px;
+        background-color: var(--primary);
+        border-radius: 10px;
+        font-family: "Poppins", sans-serif;
+    }
+
+    form {
+        max-height: 30vh;
+        overflow-y: auto;
+    }
+
+    #modaltextErr {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        width: 85%;
+        height: 30%;
+        background-color: var(--red);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 20px;
+    }
+
+    #textErr {
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <ons-page>
+        <ons-toolbar>
+            <div class="left" id="btnBack">
+                <ons-icon style="margin-left: 10px;" icon="md-arrow-back"></ons-icon>
+            </div>
+            <div class="center">Choose Outlet</div>
+        </ons-toolbar>
+        <div id="mainContainer">
+            <img id="iconChooseImg" src="assets/chooseOutlet.png" alt="chooseOutlet.png">
+            <form>
+                <!-- <div class="radioButtonItem">
+                      <input type="radio" id="1" name="rbToko" value="Toko Jababeka">
+                      <label class="radioButtonText" for="1">Toko Jababeka</label>
+                </div> -->
+            </form>
+            <div id="modaltextErr">
+                <p id="textErr">THERE IS SOMETHING WENT WRONG, BACK TO LOGIN</p>
+            </div>
+            <ons-button id="thirdSectionBtn1" modifier="large">Pilih Toko</ons-button>
+            <ons-toast id="myToast" animation="ascend">
+                Pilih toko terlebih dahulu
+            </ons-toast>
+        </div>
+    </ons-page>
+</body>
+
+<script type="module">
+    import { APIGetStore } from "./endpoint.js"
+
+    // ============================ DOM ============================
+    var btn = document.getElementById("thirdSectionBtn1");
+    var btnBack = document.getElementById("btnBack");
+
+    // ============================ FUNCTION ============================
+    document.addEventListener("DOMContentLoaded", async function () {
+        // CEK SESSION
+        if (window.localStorage.getItem("jwt") === null) {
+            window.location.href = "index.html"
+        }
+
+        // GET OUTLET
+        var req = await APIGetStore(window.localStorage.getItem("jwt"))
+        if (req.status_code === 200) {
+            console.log("SUCCESS")
+            createRadioButtons(req.data)
+        } else {
+            modaltextErr.style.display = "flex";
+        }
+    })
+
+    function createRadioButtons(data) {
+        var form = document.querySelector('form');
+
+        data.forEach(store => {
+            var radioButtonDiv = document.createElement('div');
+            radioButtonDiv.classList.add('radioButtonItem');
+
+            var radioButton = document.createElement('input');
+            radioButton.type = 'radio';
+            radioButton.id = store.id;
+            radioButton.name = 'rbToko';
+            radioButton.value = store.name;
+
+            var radioLabel = document.createElement('label');
+            radioLabel.htmlFor = store.id;
+            radioLabel.textContent = `${store.name}`;
+            radioLabel.classList.add('radioButtonText');
+
+            radioButtonDiv.appendChild(radioButton);
+            radioButtonDiv.appendChild(radioLabel);
+            form.appendChild(radioButtonDiv);
+        });
+    }
+
+    btn.onclick = function () {
+        const selectedRadioButton = document.querySelector('input[name="rbToko"]:checked');
+        if (selectedRadioButton) {
+            const selectedValue = selectedRadioButton.value;
+            const selectedId = selectedRadioButton.id;
+            console.log('ID:', selectedId);
+            console.log('Value:', selectedValue);
+            window.localStorage.setItem("store_id", selectedId);
+            window.location.href = "chooseOutletLoading.html";
+        } else {
+            myToast.toggle();
+            setTimeout(() => {
+                myToast.hide();
+            }, 2000);
+        }
+    }
+
+    btnBack.onclick = function () {
+        window.location.href = "login.html"
+    }
+
+    modaltextErr.onclick = function () {
+        window.location.href = "login.html"
+    }
+
+</script>
+
+</html>

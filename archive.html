@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capture Quotes</title>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/onsenui/css/onsen-css-components.min.css"
+    />
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <link rel="stylesheet" href="reset.css">
+  </head>
+
+  <style>
+    #result {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 12px;
+      padding: 12px;
+      border: 1px solid;
+      box-shadow: 5px 10px;
+      visibility: hidden;
+    }
+    #activity {
+      text-align: center;
+    }
+  </style>
+
+  <body>
+    <ons-page>
+      <ons-toolbar>
+        <div class="center">Capture Quotes</div>
+      </ons-toolbar>
+
+      <ons-fab
+        position="bottom right"
+        style="background-color: royalblue"
+        onClick="generateIdea()"
+      >
+        <ons-icon icon="md-refresh"></ons-icon>
+      </ons-fab>
+
+      <div id="result">
+        <h1 id="activity"></h1>
+        <p id="type"></p>
+      </div>
+    </ons-page>
+  </body>
+
+  <script>
+    async function generateIdea() {
+      const result = document.getElementById("result");
+      const activity = document.getElementById("activity");
+      const type = document.getElementById("type");
+
+      const url = "https://www.boredapi.com/api/activity";
+      const req = await fetch(url);
+      const resp = await req.json();
+
+      activity.textContent = resp.activity;
+      type.textContent = resp.type;
+      result.style.visibility = "visible";
+    }
+  </script>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POSTKU</title>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="reset.css">
+</head>
+
+<style>
+    :root {
+        --primary: #f99722;
+        --secondary: #FFBE65;
+        --grey: #C5C5C5;
+        --black50: rgba(0, 0, 0, 0.5);
+        --black30: rgba(0, 0, 0, 0.3);
+    }
+
+    #mainContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+        background-color: white;
+        padding: 16px;
+    }
+
+    #iconChooseImg {
+        width: 250px;
+        height: 250px;
+        align-self: center;
+    }
+
+    #textWait1 {
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 18px;
+        color: var(--primary);
+    }
+
+    #textWait2 {
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 10px;
+        margin-top: 10px;
+        color: var(--secondary);
+    }
+
+    #progressbar {
+        margin-left: 20px;
+        margin-right: 20px;
+        background-color: var(--primary);
+    }
+</style>
+
+<body>
+    <ons-page>
+        <ons-toolbar>
+            <div class="left"></div>
+            <div class="center">Choose Outlet</div>
+        </ons-toolbar>
+        <div id="mainContainer">
+            <img id="iconChooseImg" src="assets/chooseOutlet.png" alt="chooseOutlet.png">
+            <div>
+                <p id="textWait1">Tunggu Sebentar</p>
+                <p id="textWait2">kami sedang menyaipkan data akun POSTKU anda</p>
+            </div>
+            <ons-progress-bar id="progressbar" indeterminate></ons-progress-bar>
+        </div>
+    </ons-page>
+</body>
+
+<script>
+    // ============================ NAVIGATOR ============================
+    setTimeout(() => {
+        window.location.href = "home.html"
+    }, 5000);
+</script>
+
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POSTKU</title>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="reset.css">
+</head>
+
+<style>
+    :root {
+        --primary: #f99722;
+        --secondary: #FFBE65;
+        --grey: #C5C5C5;
+        --black50: rgba(0, 0, 0, 0.5);
+        --black30: rgba(0, 0, 0, 0.3);
+        --red: #FF0051;
+    }
+
+    #mainContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
+        background-color: white;
+        padding: 16px;
+    }
+
+    #firstSection {
+        text-align: start;
+    }
+
+    #firstSectionText {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 36px;
+        color: var(--primary);
+    }
+
+    #firstSectionText2 {
+        margin-top: 10px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 18px;
+        color: var(--secondary);
+    }
+
+    #secondSection {
+        display: flex;
+        align-self: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #secondSectionTextInput {
+        padding: 12px;
+        border: solid #C5C5C5 1px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    #secondSectionText {
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 10px;
+        color: var(--black30);
+    }
+
+    #secondSectionSSO {
+        display: flex;
+        margin-top: 10px;
+        align-items: center;
+    }
+
+    #secondSectionLine {
+        width: 80px;
+        height: 1px;
+        background-color: var(--black50);
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    #secondSectionSSOIcon {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    #secondSectionSSOIconItems {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    #thirdSection {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    #thirdSectionText {
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 12px;
+    }
+
+    #thirdSectionText2 {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 12px;
+        color: var(--primary);
+    }
+
+    #thirdSectionBtn1 {
+        margin-top: 10px;
+        background-color: var(--primary);
+        border-radius: 10px;
+    }
+
+    #modaltextErr {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        width: 85%;
+        height: 50px;
+        background-color: var(--red);
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    #textErr {
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+        font-size: 12px;
+        color: white;
+    }
+
+    /* ================================= MODAL ================================= */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modalBody {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 75%;
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%, -30%);
+    }
+
+    .modalClose {
+        text-align: end;
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .modalImg {
+        height: 150px;
+        width: 150px;
+        align-self: center;
+    }
+
+    .modalText {
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+</style>
+
+<body>
+    <ons-page>
+        <ons-toolbar>
+            <div id="btnBack" class="left">
+                <ons-icon style="margin-left: 10px;" icon="md-arrow-back"></ons-icon>
+            </div>
+            <div class="center">Masuk</div>
+        </ons-toolbar>
+        <div id="mainContainer">
+            <div id="firstSection">
+                <p id="firstSectionText">Ayo Masuk</p>
+                <p id="firstSectionText2">Dan mulai petualangan bisnismu bersama kami</p>
+            </div>
+            <div id="secondSection">
+                <div id="modaltextErr">
+                    <p id="textErr"></p>
+                </div>
+                <div id="secondSectionTextInput">
+                    <ons-input style="width: 300px;" id="email" placeholder="E-mail"></ons-input>
+                </div>
+                <div id="secondSectionTextInput">
+                    <ons-input style="width: 300px;" id="password" placeholder="Password" type="password"></ons-input>
+                </div>
+                <div id="secondSectionSSO">
+                    <div id="secondSectionLine"></div>
+                    <p id="secondSectionText">Atau masuk dengan</p>
+                    <div id="secondSectionLine"></div>
+                </div>
+                <div id="secondSectionSSOIcon">
+                    <img id="secondSectionSSOIconItems" src="assets/waIcons.png" alt="waIcons" />
+                    <img id="secondSectionSSOIconItems" src="assets/gmailIcons.png" alt="gmailIcons" />
+                </div>
+            </div>
+            <div id="thirdSection">
+                <p id="thirdSectionText">Belum punya akun ? <span id="thirdSectionText2">Daftar</span></p>
+                <ons-button id="thirdSectionBtn1" modifier="large">Masuk</ons-button>
+            </div>
+            <div id="myModal" class="modal">
+                <div class="modalBody">
+                    <span class="modalClose">&times;</span>
+                    <img class="modalImg" src="assets/notifSuccess.png" alt="notifSuccess" />
+                    <p class="modalText">Success Login</p>
+                </div>
+            </div>
+        </div>
+    </ons-page>
+</body>
+
+<script type="module">
+    import { APILogin } from "./endpoint.js"
+
+    // ============================ DOM ============================
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("thirdSectionBtn1");
+    var btnBack = document.getElementById("btnBack");
+    var btnRegister = document.getElementById("thirdSectionText2");
+    var modaltextErr = document.getElementById("modaltextErr");
+    var textErr = document.getElementById("textErr");
+    var spanClose = document.getElementsByClassName("modalClose")[0];
+
+    // ============================ FUNCTION ============================
+    btn.onclick = async function () {
+        var inputEmail = document.getElementById("email").value
+        var inputPwd = document.getElementById("password").value
+
+        if (inputEmail === "" || inputPwd === "") {
+            textErr.innerText = "Email or Password empty"
+            modaltextErr.style.display = "flex";
+        } else {
+            var req = await APILogin(inputEmail, inputPwd)
+            if (req.status_code === 200) {
+                window.localStorage.setItem("jwt", req.access_token);
+                modal.style.display = "block";
+            } else {
+                textErr.innerText = "Email or Password wrong!"
+                modaltextErr.style.display = "flex";
+            }
+        }
+    }
+
+    spanClose.onclick = function () {
+        modal.style.display = "none";
+        window.location.href = "chooseOutlet.html";
+    }
+
+    btnRegister.onclick = function () {
+        window.location.href = "register.html"
+    }
+
+    btnBack.onclick = function () {
+        window.location.href = "index.html"
+    }
+</script>
+
+</html>
