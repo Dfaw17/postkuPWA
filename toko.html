@@ -5,9 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>POSTKU</title>
-    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
-    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
-    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./onsenui/css/onsenui.css">
+    <link rel="stylesheet" type="text/css" href="./onsenui/css/onsen-css-components.min.css">
+    <script type="text/javascript" src="./onsenui/js/onsenui.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -273,7 +273,7 @@
 <body>
     <ons-page>
         <ons-toolbar>
-            <div class="left" onclick="navHome()">
+            <div class="left" id="btnBack">
                 <ons-icon style="margin-left: 10px;" icon="md-arrow-back"></ons-icon>
             </div>
             <div class="center">Toko</div>
@@ -328,6 +328,10 @@
                     <img id="listItemImgTipe" src="assets/profileArrow.png" alt="profileArrow" />
                 </div>
             </div>
+            <div id="modalAddTipe"
+                style="border: 3px black solid; height: 300px; margin: 10px; border-radius: 10px; display: none;">
+                <p style="text-align: center; margin-top: 10px;">Tipe Order</p>
+            </div>
         </ons-page>
     </template>
 
@@ -356,11 +360,22 @@
     </template>
 </body>
 
-<script>
-    // ============================ NAVIGATOR ============================
-    function navHome() {
-        window.location.href = "home.html"
-    }
+<script type="module">
+    window.onload = function () {
+        // ============================ DOM ============================
+        var btnBack = document.getElementById("btnBack");
+        var btnAddType = document.getElementById("elemPlusTipe");
+        var modalAddTipe = document.getElementById("modalAddTipe");
+        var btnAddToko = document.getElementById("elemPlusToko");
+
+        // ============================ FUNCTION ============================
+        btnBack.onclick = function () {
+            window.location.href = "home.html"
+        }
+        btnAddType.onclick = function () {
+            modalAddTipe.style.display = "block";
+        }
+    };
 </script>
 
 </html>
